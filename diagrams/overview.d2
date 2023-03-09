@@ -1,0 +1,27 @@
+Terraform
+
+Ansible
+
+"Cloud Machine 1": {
+  client app
+}
+
+"Cloud Machine 2": {
+  client app
+}
+
+CTF Platform: {
+  TBD
+}
+
+ScoreKeeping Server: {
+  Python FastAPI
+}
+
+Terraform -> "Cloud Machine 1": Instantiate
+Terraform -> "Cloud Machine 2": Instantiate
+Ansible -> "Cloud Machine 1": Provision
+Ansible -> "Cloud Machine 2": Provision
+
+Cloud Machine 1.client app <-> ScoreKeeping Server: API calls
+Cloud Machine 2.client app <-> ScoreKeeping Server: API calls
