@@ -1,0 +1,12 @@
+salt/ansible scripts to provision both machines
+
+TODO: get IP addresses from terraform
+
+We can omit using ssh keys with the current config.
+
+TODO: find a CTF platform
+TODO: potentially create REST API score keeping system
+    - client periodically runs a script checking ports
+    - the script will then send the list of ports to server via POST request
+
+
