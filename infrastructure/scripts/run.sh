@@ -12,8 +12,8 @@ FILE=file2.sh
 
 cd ../ctf_platform/
 
-make down
-terraform apply -auto-approve >/dev/null
+make down >/dev/null && echo "Tore down surviving VMs"
+terraform apply -auto-approve >/dev/null && "Successfully created VMs"
 wait $!
 
 terraform output
@@ -34,10 +34,14 @@ else
   PRIVATE_IP="$IP1"
 fi
 
-echo "$PRIVATE_IP"
+echo "Private IP created: $PRIVATE_IP"
 ssh-copy-id -i $SSH_KEY root@"$PRIVATE_IP" 
+ssh-add $SSH_KEY
 scp ../../provisioning/$FILE root@"$PRIVATE_IP":/$FILE 
 
-ssh root@"$PRIVATE_IP" "chmod 775 /$FILE"
-ssh root@"$PRIVATE_IP" "/$FILE"
+ssh root@"$PRIVATE_IP" "chmod 775 /$FILE" >/dev/null && echo "Script permissions changed successfully"
+ssh root@"$PRIVATE_IP" "/$FILE" >/dev/null && "Successfully instantiated CTF infrastructure"
+
+echo -e "\nYou can now visit your CTF plaform"
+echo "http://$PRIVATE_IP:8000"
 
