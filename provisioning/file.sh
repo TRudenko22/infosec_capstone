@@ -14,6 +14,6 @@ cd ${HOME}
 git clone https://github.com/CTFd/CTFd.git
 cd ${HOME}/CTFd
 ./prepare.sh
-pip install -r requirements.txt
-#flask run
+#pip install -r requirements.txt
+flask run
 
