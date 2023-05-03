@@ -1,7 +1,11 @@
 #!/bin/bash
 
+
+SSH_KEY="~/.ssh/linode"
+
 cd ../ctf_platform/
 
+make down
 terraform apply -auto-approve >/dev/null
 wait $!
 
@@ -24,7 +28,7 @@ else
 fi
 
 echo "$PRIVATE_IP"
-ssh-copy-id -i ~/.ssh/linode root@"$PRIVATE_IP" 
+ssh-copy-id -i "$SSH_KEY" root@"$PRIVATE_IP" 
 scp ../../provisioning/file.sh root@"$PRIVATE_IP":/file.sh 
 
 ssh root@"$PRIVATE_IP" 'chmod 775 /file.sh'
