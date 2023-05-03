@@ -1,5 +1,13 @@
 #!/bin/bash
+
 SSH_KEY=~/.ssh/linode
+if [ ! -f $SSH_KEY ]; then
+	ssh-keygen -f $SSH_KEY -N ''
+	echo 'Please add the following key to your Linode account'
+	cat $SSH_KEY
+elif [ ${USER} = 'picounter' ]; then
+	SSH_KEY=~/.ssh/id_ed25519
+fi
 FILE=file2.sh
 
 cd ../ctf_platform/
