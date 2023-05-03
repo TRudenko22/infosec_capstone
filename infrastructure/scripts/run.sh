@@ -6,10 +6,18 @@ FILE=file2.sh
 if [[ ${USER} = 'picounter' ]]; then
 	SSH_KEY=~/.ssh/id_ed25519
 elif [[ ! -f $SSH_KEY ]]; then
-	ssh-keygen -f $SSH_KEY -N ''
-	echo 'Please add the following key to your Linode account'
-	cat $SSH_KEY
-  exit 1
+	echo 'Default ~/.ssh/linode ssh key not found.'
+	echo 'Enter path for your Linode ssh key or press enter to create a new key: '
+	read RESPONSE
+	if [ $RESPONSE = '' ]; then
+		ssh-keygen -f $SSH_KEY -N ''
+		echo 'Please add the following key to your Linode account'
+		cat $SSH_KEY
+  		exit 0
+	else
+		SSH_KEY=$RESPONSE
+	fi
+	echo $RESPONSE
 fi
 
 cd ../ctf_platform/
