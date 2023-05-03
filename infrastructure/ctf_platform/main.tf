@@ -12,7 +12,7 @@ provider "linode" {
 }
 
 resource "linode_instance" "ctf-server" {
-    label = "defense_server"
+    label = "ctfplatoform"
     image = "linode/debian10"
     region = "us-central"
     type = "g6-nanode-1"
