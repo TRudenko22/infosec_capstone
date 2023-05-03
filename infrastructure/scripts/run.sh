@@ -13,7 +13,10 @@ FILE=file2.sh
 cd ../ctf_platform/
 
 make down >/dev/null && echo "Tore down surviving VMs"
-terraform apply -auto-approve >/dev/null && "Successfully created VMs"
+
+echo "Starting VM initialiaztion"
+
+terraform apply -auto-approve >/dev/null && echo "Successfully created VMs"
 wait $!
 
 terraform output

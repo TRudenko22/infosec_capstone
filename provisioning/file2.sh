@@ -2,9 +2,9 @@
 # get file from gh and startup CTFd
 
 # update
-apt update
-apt upgrade -y
-apt install git docker docker-compose -y
+apt update >/dev/null
+apt upgrade -y >/dev/null
+apt install git docker docker-compose -y >/dev/null
 
 cd ${HOME}
 
@@ -13,5 +13,5 @@ cd ${HOME}
 # CTFd
 git clone https://github.com/CTFd/CTFd.git
 cd ${HOME}/CTFd
-docker-compose up
+docker-compose up 
 
