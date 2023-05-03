@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "Hello" > it_works.txt
-
+apt update && apt upgrade -y
+apt install neofetch -y
