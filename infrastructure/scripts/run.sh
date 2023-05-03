@@ -2,6 +2,7 @@
 
 
 SSH_KEY=~/.ssh/linode
+FILE=file2.sh
 
 cd ../ctf_platform/
 
@@ -29,8 +30,8 @@ fi
 
 echo "$PRIVATE_IP"
 ssh-copy-id -i $SSH_KEY root@"$PRIVATE_IP" 
-scp ../../provisioning/file.sh root@"$PRIVATE_IP":/file.sh 
+scp ../../provisioning/$FILE root@"$PRIVATE_IP":/$FILE 
 
-ssh root@"$PRIVATE_IP" 'chmod 775 /file.sh'
-ssh root@"$PRIVATE_IP" '/file.sh'
+ssh root@"$PRIVATE_IP" 'chmod 775 /$FILE
+ssh root@"$PRIVATE_IP" '/$FILE
 
