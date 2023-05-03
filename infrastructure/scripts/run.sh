@@ -1,18 +1,13 @@
 #!/bin/bash
 
-SSH_KEY=~/.ssh/linode
 FILE=file2.sh
-
-if [[ ${USER} = 'picounter' ]]; then
-	SSH_KEY=~/.ssh/id_ed25519
-elif [[ ! -f $SSH_KEY ]]; then
-	ssh-keygen -f $SSH_KEY -N ''
-	echo 'Please add the following key to your Linode account'
-	cat $SSH_KEY
-  exit 1
-fi
+SSH_KEY=~/.ssh/linode.GhJHjhlk
 
 cd ../ctf_platform/
+
+if [[ ! -f $SSH_KEY ]]; then
+  ssh-keygen -t rsa -f ~/.ssh/linode.GhJHjhlk -N ''
+fi
 
 make down >/dev/null && echo "Tore down surviving VMs"
 
