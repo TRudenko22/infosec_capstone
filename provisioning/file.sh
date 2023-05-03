@@ -13,7 +13,7 @@ cd ${HOME}
 # CTFd
 git clone https://github.com/CTFd/CTFd.git
 cd ${HOME}/CTFd
-./prepare.sh
-#pip install -r requirements.txt
+#./prepare.sh
+pip install -r requirements.txt
 flask run
 
