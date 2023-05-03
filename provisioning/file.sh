@@ -6,6 +6,8 @@ apt update
 apt upgrade -y
 apt install git python3-pip python3-flask -y
 
+pip3 install flask
+
 cd ${HOME}
 
 #git clone https://github.com/TRudenko22/infosec_capstone.git
