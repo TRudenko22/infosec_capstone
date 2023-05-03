@@ -1,16 +1,11 @@
 #!/bin/bash
 
 FILE=file2.sh
-SSH_KEY=~/.ssh/linode.GhJHjhlk
+SSH_KEY=~/.ssh/linode
 
 cd ../ctf_platform/
 
-if [[ ! -f $SSH_KEY ]]; then
-  ssh-keygen -t rsa -f ~/.ssh/linode.GhJHjhlk -N ''
-fi
-
 make down >/dev/null && echo "Tore down surviving VMs"
-
 echo "Starting VM initialiaztion"
 
 terraform apply -auto-approve && echo -e "\nSuccessfully created VMs"
@@ -34,9 +29,15 @@ else
 fi
 
 echo "Private IP created: $PRIVATE_IP"
-ssh-copy-id -i $SSH_KEY root@"$PRIVATE_IP" 
+
+ssh-keygen -t rsa -f ~/.ssh/linode -N ''
+
+eval $(ssh-agent -s)
 ssh-add $SSH_KEY
+
+ssh-copy-id -i $SSH_KEY root@"$PRIVATE_IP" 
 scp ../../provisioning/$FILE root@"$PRIVATE_IP":/$FILE 
+
 
 ssh root@"$PRIVATE_IP" "chmod 775 /$FILE" && echo "Script permissions changed successfully"
 ssh root@"$PRIVATE_IP" "/$FILE" && echo "Successfully instantiated CTF infrastructure"
