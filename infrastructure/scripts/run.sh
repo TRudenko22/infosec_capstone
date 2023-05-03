@@ -27,4 +27,6 @@ echo "$PRIVATE_IP"
 ssh-copy-id -i ~/.ssh/linode root@"$PRIVATE_IP" 
 scp ../scripts/init.sh root@"$PRIVATE_IP":/init.sh 
 
-#ssh root@"$PRIVATE_IP" 
+ssh root@"$PRIVATE_IP" 'chmod 775 /init.sh'
+ssh root@"$PRIVATE_IP" '/init.sh'
+
