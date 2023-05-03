@@ -16,10 +16,9 @@ make down >/dev/null && echo "Tore down surviving VMs"
 
 echo "Starting VM initialiaztion"
 
-terraform apply -auto-approve >/dev/null && echo "Successfully created VMs"
+terraform apply -auto-approve && echo -e "\nSuccessfully created VMs"
 wait $!
 
-terraform output
 IP1=$(echo $(terraform output) \
   | awk '{print $5}' \
   | tr -d '"' \
@@ -43,7 +42,7 @@ ssh-add $SSH_KEY
 scp ../../provisioning/$FILE root@"$PRIVATE_IP":/$FILE 
 
 ssh root@"$PRIVATE_IP" "chmod 775 /$FILE" >/dev/null && echo "Script permissions changed successfully"
-ssh root@"$PRIVATE_IP" "/$FILE" >/dev/null && "Successfully instantiated CTF infrastructure"
+ssh root@"$PRIVATE_IP" "/$FILE" >/dev/null && echo "Successfully instantiated CTF infrastructure"
 
 echo -e "\nYou can now visit your CTF plaform"
 echo "http://$PRIVATE_IP:8000"
