@@ -1,14 +1,16 @@
 #!/bin/bash
 
 SSH_KEY=~/.ssh/linode
+FILE=file2.sh
+
 if [[ ${USER} = 'picounter' ]]; then
 	SSH_KEY=~/.ssh/id_ed25519
 elif [[ ! -f $SSH_KEY ]]; then
 	ssh-keygen -f $SSH_KEY -N ''
 	echo 'Please add the following key to your Linode account'
 	cat $SSH_KEY
+  exit 1
 fi
-FILE=file2.sh
 
 cd ../ctf_platform/
 
@@ -41,8 +43,8 @@ ssh-copy-id -i $SSH_KEY root@"$PRIVATE_IP"
 ssh-add $SSH_KEY
 scp ../../provisioning/$FILE root@"$PRIVATE_IP":/$FILE 
 
-ssh root@"$PRIVATE_IP" "chmod 775 /$FILE" >/dev/null && echo "Script permissions changed successfully"
-ssh root@"$PRIVATE_IP" "/$FILE" >/dev/null && echo "Successfully instantiated CTF infrastructure"
+ssh root@"$PRIVATE_IP" "chmod 775 /$FILE" && echo "Script permissions changed successfully"
+ssh root@"$PRIVATE_IP" "/$FILE" && echo "Successfully instantiated CTF infrastructure"
 
 echo -e "\nYou can now visit your CTF plaform"
 echo "http://$PRIVATE_IP:8000"

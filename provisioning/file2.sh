@@ -2,9 +2,9 @@
 # get file from gh and startup CTFd
 
 # update
-apt update -qqq -y && echo "Packages updated"
-apt upgrade -qqq  -y && echo "Packages upgraded"
-apt install git docker docker-compose -y && echo "Tools installed"
+apt update -y && echo -e "\nPackages updated\n"
+apt upgrade  -y && echo "\nPackages upgraded\n"
+apt install git docker docker-compose -y 
 
 cd ${HOME}
 
@@ -13,7 +13,7 @@ cd ${HOME}
 # CTFd
 git clone https://github.com/CTFd/CTFd.git
 cd ${HOME}/CTFd
-docker-compose up &
+docker-compose up
 
 echo "Docker compose initiated"
 
