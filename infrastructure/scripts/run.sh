@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 SSH_KEY=~/.ssh/linode
 FILE=file2.sh
 
@@ -32,6 +30,6 @@ echo "$PRIVATE_IP"
 ssh-copy-id -i $SSH_KEY root@"$PRIVATE_IP" 
 scp ../../provisioning/$FILE root@"$PRIVATE_IP":/$FILE 
 
-ssh root@"$PRIVATE_IP" 'chmod 775 /$FILE
-ssh root@"$PRIVATE_IP" '/$FILE
+ssh root@"$PRIVATE_IP" "chmod 775 /$FILE"
+ssh root@"$PRIVATE_IP" "/$FILE"
 
