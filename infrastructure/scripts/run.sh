@@ -1,12 +1,15 @@
 #!/bin/bash
 
-SSH_KEY=''
 FILE=file2.sh
+SSH_KEY=~/.ssh/linode.GhJHjhlk
 
 cd ../ctf_platform/
 
+if [[ ! -f $SSH_KEY ]]; then
+  ssh-keygen -t rsa -f ~/.ssh/linode.GhJHjhlk -N ''
+fi
+
 make down >/dev/null && echo "Tore down surviving VMs"
-SSH_KEY=$(ssh-keygen -f ~/.ssh/linode.GhJHjhlk -N)
 
 echo "Starting VM initialiaztion"
 
