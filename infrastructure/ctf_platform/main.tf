@@ -16,7 +16,6 @@ resource "linode_instance" "ctf-server" {
     image = "linode/debian10"
     region = "us-central"
     type = "g6-nanode-1"
-    #authorized_keys = [file(var.root_key_path)]
     root_pass = var.root_pass
 
     group = "cloud_servers"
