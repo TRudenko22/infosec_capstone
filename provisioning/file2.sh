@@ -13,7 +13,7 @@ cd ${HOME}
 # CTFd
 git clone https://github.com/CTFd/CTFd.git
 cd ${HOME}/CTFd
-docker-compose up
+docker-compose up -d
 
 echo "Docker compose initiated"
 
