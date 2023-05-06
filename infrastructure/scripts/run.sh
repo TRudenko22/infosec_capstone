@@ -30,7 +30,10 @@ fi
 
 echo "Private IP created: $PRIVATE_IP"
 
-ssh-keygen -t rsa -f ~/.ssh/linode -N ''
+if [ ! -f $SSH_KEY ]; then
+	echo 'Generating Linode Key Pair'
+	ssh-keygen -t rsa -f $SSH_KEY -N ''
+fi
 
 eval $(ssh-agent -s)
 ssh-add $SSH_KEY
