@@ -3,6 +3,22 @@
 # Variables
 FILE=file2.sh
 SSH_KEY=~/.ssh/linode
+CHANGED_PASSWORD=false
+PASSWORD_FILE=../ctf_platform/variables.tf 
+
+function generate_random_password {
+	CHANGED_PASSWORD=true
+
+	# generate 12 char long password with upper, lower, numbers, and special using time and process ID as seed
+	password=$(apg -n -1 -m 12 -M SNCL -c c1_seed)
+
+	# backup file
+	if ! [ -f ${PASSWORD_FILE}.bkup ]; then
+		cp $PASSWORD_FILE ${PASSWORD_FILE}.bkup
+	fi
+	cat $PASSWORD_FILE | sed "s/pleasechangethepassword/${password}/" > $PASSWORD_FILE
+	echo -e "~ Your one time password for this instance is:\n$password"
+}
 
 cd ../ctf_platform/
 
@@ -45,6 +61,8 @@ fi
 eval $(ssh-agent -s)
 ssh-add $SSH_KEY
 
+#generate_random_password 
+
 # Copy SSH key to new VM (Password required from infosec_capstone/infrastructure/ctf_platform/variables.tf)
 ssh-copy-id -i $SSH_KEY root@"$PRIVATE_IP" 
 
@@ -61,4 +79,9 @@ while ! curl -s $PRIVATE_IP:8000 > /dev/null; do
 done
 echo -e "\nYou can now visit your CTF plaform"
 echo "http://$PRIVATE_IP:8000"
+
+if [ $CHANGED_PASSWORD = 'true' ]; then
+	cp ${PASSWORD_FILE}.bkup $PASSWORD_FILE
+	rm ${PASSWORD_FILE}.bkup
+fi
 
