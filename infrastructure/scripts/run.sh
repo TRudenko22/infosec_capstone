@@ -31,6 +31,13 @@ echo -e "Starting VM initialization\n"
 output=$(terraform apply -auto-approve 2>&1)
 if [ $? -ne 0 ]; then
 	echo -e "\n ! ERROR creating VMs"
+	echo "ensure the following dependencies are installed:"
+	echo "make"
+	echo "wget"
+	echo "ssh"
+	echo "git"
+	echo "terraform"
+	echo -e "\tfor terraform please follow directions here: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli"
 	echo "~ Did you remember to add your API key to infosec_capstone/infrastructure/ctf_platform/variables.tf ? ~"
 	exit 1
 else
