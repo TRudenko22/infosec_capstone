@@ -1,5 +1,5 @@
 #! /bin/bash
-# get file from gh and startup CTFd
+# run CTFd with flask
 
 # update
 apt update
@@ -17,5 +17,9 @@ git clone https://github.com/CTFd/CTFd.git
 cd ${HOME}/CTFd
 #./prepare.sh
 pip install -r requirements.txt
-flask run
+flask run &
+while ! curl -s http://localhost:4000/ > /dev/null; do
+	sleep 1
+done
+echo 'Flask is up and running'
 
