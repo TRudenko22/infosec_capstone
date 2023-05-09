@@ -10,15 +10,19 @@ DEPENDENCIES_FILE="dependencies.txt"
 CHANGED_PASSWORD=false
 
 # Functions
+function prepare_terraform {
+	echo 'Adding Terraform repository...'
+	curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+	sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+	echo 'Updating package lists...'
+	sudo apt update
+}
+
 function verify_dependencies {
 	while read dependency; do
 		if ! dpkg -s "$dependency" > /dev/null 2>&1 ; then
 			if [ $dependency = 'terraform' ]; then
-				echo 'Adding Terraform repository...'
-				curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-				sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-				echo 'Updating package lists...'
-				sudo apt update
+				prepare_terraform
 			fi
 			echo "$dependency is not installed. Installing..."
 			if ! sudo apt install -y "$dependency"; then
