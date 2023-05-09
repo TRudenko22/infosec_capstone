@@ -1,6 +1,6 @@
 # Cloud Infrastructure Deployment for CTF Platform via Linode
 **Information Security Capstone project**
-- By: [Tim Rudenko](github.com/TRudenko22) && [Michael Buckley](github.com/piCounter)
+- By: [Tim Rudenko](https://github.com/TRudenko22) && [Michael Buckley](https://github.com/piCounter)
 - Completed for STCC <stcc.edu> CIT-252 2023SP
 
 ## What is ___?
@@ -63,3 +63,4 @@ This guide outlines the steps required to deply a Capture the Flag (CTF) platfor
 - Cloud Provider: [Linode/Akamai](linode.com)
 - CTF Framework: [CTFd](github.com/CTFd/CTFd)
 - Features Drama: [ChatGPT](chat.openai.com/?model=gpt-4)
+- [HashiCorp Terraform](https://github.com/hashicorp/terraform)
