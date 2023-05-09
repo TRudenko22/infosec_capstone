@@ -1,6 +1,6 @@
 # Cloud Infrastructure Deployment for CTF Platform via Linode
 **Information Security Capstone project**
-- By: [Tim Rudenko](github.com/TRudenko22) & [Michael Buckley](github.com/piCounter)
+- By: [Tim Rudenko](github.com/TRudenko22) && [Michael Buckley](github.com/piCounter)
 - Completed for STCC <stcc.edu> CIT-252 2023SP
 
 ## What is ___?
@@ -51,7 +51,8 @@ This guide outlines the steps required to deply a Capture the Flag (CTF) platfor
 `./run.sh`
 
 ## Demo
-[![youtube](https://www.youtube-nocookie.com/embed/sDDEnUs3PG4)](https://youtu.be/sDDEnUs3PG4)
+[![Demo](http://img.youtube.com/vi/sDDEnUs3PG4/0.jpg)](http://www.youtube.com/watch?v=sDDEnUs3PG4)
+
 
 ## Credits
 - Concept: Collaberative effort as the idea evolved over time
