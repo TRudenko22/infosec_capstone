@@ -1,24 +1,49 @@
 #!/bin/bash
 
-# Variables
+# Constancts
 FILE=file2.sh
 SSH_KEY=~/.ssh/linode
-CHANGED_PASSWORD=false
 PASSWORD_FILE=../ctf_platform/variables.tf 
+DEPENDENCIES_FILE="dependencies.txt"
+
+# Variables
+CHANGED_PASSWORD=false
+
+# Functions
+function verify_dependencies {
+	while read dependency; do
+		if ! dpkg -s "$dependency" > /dev/null 2>&1 ; then
+			if [ $dependency = 'terraform' ]; then
+				echo 'Adding Terraform repository...'
+				curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+				sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+				echo 'Updating package lists...'
+				sudo apt update
+			fi
+			echo "$dependency is not installed. Installing..."
+			if ! sudo apt install -y "$dependency"; then
+				echo "! ERROR installing $dependency"
+				exit 1
+			fi
+		else
+			echo "$dependency is already installed."
+		fi
+	done < "$DEPENDENCIES_FILE"
+}
 
 function generate_random_password {
 	CHANGED_PASSWORD=true
-
-	# generate 12 char long password with upper, lower, numbers, and special using time and process ID as seed
-	password=$(apg -n -1 -m 12 -M SNCL -c c1_seed)
-
+	# generate 12 char long password with upper, lower, numbers, and special
+	password=$(apg -n 1 -m 12 -M SNCL)
 	# backup file
 	if ! [ -f ${PASSWORD_FILE}.bkup ]; then
 		cp $PASSWORD_FILE ${PASSWORD_FILE}.bkup
 	fi
-	cat $PASSWORD_FILE | sed "s/pleasechangethepassword/${password}/" > $PASSWORD_FILE
-	echo -e "~ Your one time password for this instance is:\n$password"
+	sed -i "s/pleasechangethepassword/${password}/" $PASSWORD_FILE
+	echo -e "~ Your one time password for this instance is: ${password}"
 }
+
+verify_dependencies 
 
 cd ../ctf_platform/
 
@@ -31,13 +56,6 @@ echo -e "Starting VM initialization\n"
 output=$(terraform apply -auto-approve 2>&1)
 if [ $? -ne 0 ]; then
 	echo -e "\n ! ERROR creating VMs"
-	echo "ensure the following dependencies are installed:"
-	echo "make"
-	echo "wget"
-	echo "ssh"
-	echo "git"
-	echo "terraform"
-	echo -e "\tfor terraform please follow directions here: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli"
 	echo "~ Did you remember to add your API key to infosec_capstone/infrastructure/ctf_platform/variables.tf ? ~"
 	exit 1
 else

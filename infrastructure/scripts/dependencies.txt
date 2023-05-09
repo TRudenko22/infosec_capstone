@@ -1,0 +1,9 @@
+sudo
+curl
+dpkg
+lsb-release
+software-properties-common
+apg
+make
+ssh
+terraform
